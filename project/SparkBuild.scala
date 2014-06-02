@@ -166,7 +166,7 @@ object SparkBuild extends Build {
   def sharedSettings = Defaults.defaultSettings ++ MimaBuild.mimaSettings(file(sparkHome)) ++ Seq(
     organization       := "org.apache.spark",
     version            := SPARK_VERSION,
-    scalaVersion       := "2.10.4",
+    scalaVersion       := "2.11.1",
     scalacOptions := Seq("-Xmax-classfile-name", "120", "-unchecked", "-deprecation", "-feature",
       "-target:" + SCALAC_JVM_VERSION),
     javacOptions := Seq("-target", JAVAC_JVM_VERSION, "-source", JAVAC_JVM_VERSION),
@@ -274,8 +274,8 @@ object SparkBuild extends Build {
         "org.eclipse.jetty" % "jetty-util"     % jettyVersion,
         "org.eclipse.jetty" % "jetty-plus"     % jettyVersion,
         "org.eclipse.jetty" % "jetty-security" % jettyVersion,
-        "org.scalatest"    %% "scalatest"       % "1.9.1"  % "test",
-        "org.scalacheck"   %% "scalacheck"      % "1.10.0" % "test",
+        "org.scalatest"    %% "scalatest"       % "2.1.7"  % "test",
+        "org.scalacheck"   %% "scalacheck"      % "1.10.1" % "test",
         "com.novocode"      % "junit-interface" % "0.10"   % "test",
         "org.easymock"      % "easymock"        % "3.1"    % "test",
         "org.mockito"       % "mockito-all"     % "1.8.5"  % "test"
@@ -294,9 +294,9 @@ object SparkBuild extends Build {
     publishMavenStyle in MavenCompile := true,
     publishLocal in MavenCompile <<= publishTask(publishLocalConfiguration in MavenCompile, deliverLocal),
     publishLocalBoth <<= Seq(publishLocal in MavenCompile, publishLocal).dependOn
-  ) ++ net.virtualvoid.sbt.graph.Plugin.graphSettings ++ ScalaStyleSettings ++ genjavadocSettings
+  ) ++ net.virtualvoid.sbt.graph.Plugin.graphSettings ++ ScalaStyleSettings //++ genjavadocSettings
 
-  val akkaVersion = "2.2.3-shaded-protobuf"
+  val akkaVersion = "2.3.3"
   val chillVersion = "0.3.6"
   val codahaleMetricsVersion = "3.0.0"
   val jblasVersion = "1.2.3"
@@ -342,10 +342,10 @@ object SparkBuild extends Build {
         "commons-daemon"             % "commons-daemon"   % "1.0.10", // workaround for bug HADOOP-9407
         "com.ning"                   % "compress-lzf"     % "1.0.0",
         "org.xerial.snappy"          % "snappy-java"      % "1.0.5",
-        "org.spark-project.akka"    %% "akka-remote"      % akkaVersion,
-        "org.spark-project.akka"    %% "akka-slf4j"       % akkaVersion,
-        "org.spark-project.akka"    %% "akka-testkit"     % akkaVersion % "test",
-        "org.json4s"                %% "json4s-jackson"   % "3.2.6" excludeAll(excludeScalap),
+        "com.typesafe.akka"         %% "akka-remote"      % akkaVersion,
+        "com.typesafe.akka"         %% "akka-slf4j"       % akkaVersion,
+        "com.typesafe.akka"         %% "akka-testkit"     % akkaVersion % "test",
+        "org.json4s"                %% "json4s-jackson"   % "3.2.10" excludeAll(excludeScalap),
         "colt"                       % "colt"             % "1.2.0",
         "org.apache.mesos"           % "mesos"            % "0.18.1" classifier("shaded-protobuf") exclude("com.google.protobuf", "protobuf-java"),
         "commons-net"                % "commons-net"      % "2.2",
