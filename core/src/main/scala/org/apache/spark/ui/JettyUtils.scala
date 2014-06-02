@@ -84,8 +84,16 @@ private[spark] object JettyUtils extends Logging {
   def createServletHandler[T <% AnyRef](
       path: String,
       servletParams: ServletParams[T],
+      securityMgr: SecurityManager): ServletContextHandler = {
+    createServletHandler(path, createServlet(servletParams, securityMgr), "")
+  }
+
+  /** Create a context handler that responds to a request with the given path prefix */
+  def createServletHandler[T <% AnyRef](
+      path: String,
+      servletParams: ServletParams[T],
       securityMgr: SecurityManager,
-      basePath: String = ""): ServletContextHandler = {
+      basePath: String): ServletContextHandler = {
     createServletHandler(path, createServlet(servletParams, securityMgr), basePath)
   }
 
