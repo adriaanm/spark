@@ -57,7 +57,7 @@ class BernoulliSampler[T](lb: Double, ub: Double, complement: Boolean = false)
     (implicit random: Random = new XORShiftRandom)
   extends RandomSampler[T, T] {
 
-  def this(ratio: Double)(implicit random: Random = new XORShiftRandom)
+  def this(ratio: Double)(implicit random: Random)
     = this(0.0d, ratio)(random)
 
   override def setSeed(seed: Long) = random.setSeed(seed)
